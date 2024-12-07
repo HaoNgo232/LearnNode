@@ -1,0 +1,10 @@
+// Buổi đầu tiên tự học
+git init
+git add . // Đánh đấu 
+git commit -m 'init project'
+git remote add origin https://github.com/HaoNgo232/LearnNode.git // link này có  thể thay đổi
+git push origin master // đẩy code lên git
+
+npm init // Khởi tạo 1 dự án mới với npm
+
+.gitignore // là file dùng để chỉ định các tệp tin và thư mục mà Git nên bỏ qua khi theo dõi dự án của bạn.
