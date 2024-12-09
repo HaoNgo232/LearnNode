@@ -1,6 +1,16 @@
-
+const connection = require('../config/database')
 const getHomepage = (req, res) => {
-    res.send('Hello World! với nodemon')
+    let user = []
+    // trỏ đến databese để thực thi truy vấn
+    connection.query(
+        'SELECT * FROM Users u',
+        function (err, results, fields) {
+            user = results
+            console.log('>>> check results =', results)
+            console.log('>>> check user =', user)
+            res.send(JSON.stringify(user))
+        }
+    )
 }
 
 const getABC = (req, res) => {
