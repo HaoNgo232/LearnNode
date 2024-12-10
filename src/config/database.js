@@ -1,5 +1,5 @@
 require('dotenv').config()
-const mysql = require('mysql2')
+const mysql = require('mysql2/promise')
 
 // Tạo kết nối đến database
 // const connection = mysql.createConnection({
