@@ -1,17 +1,25 @@
-const express = require('express')
-const { getHomepage, getABC, hoiTao, postCreateUser, getCreatePage } = require('../controllers/homeController')
-const router = express.Router()
-
+const express = require("express");
+const {
+  getHomepage,
+  getABC,
+  hoiTao,
+  postCreateUser,
+  getCreatePage,
+  getUpdatePage,
+} = require("../controllers/homeController");
+const router = express.Router();
 
 // Cấu trúc 1 route router.Method('url', handlers - cụ thể là gọi tham chiếu hàm từ file homeController)
-router.get('/', getHomepage)
+router.get("/", getHomepage);
 
-router.get('/abc', getABC)
+router.get("/abc", getABC);
 
-router.get('/hoitao', hoiTao)
+router.get("/hoitao", hoiTao);
 
-router.get('/create', getCreatePage)
+router.get("/create", getCreatePage);
 
-router.post('/create-user', postCreateUser)
+router.get("/update/:id", getUpdatePage);
 
-module.exports = router
+router.post("/create-user", postCreateUser);
+
+module.exports = router;
