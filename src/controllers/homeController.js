@@ -32,8 +32,6 @@ const postCreateUser = async (req, res) => {
   // );
   await User.create({
     email: email,
-    name: name,
-    city: city,
   });
   res.send("Create user successfully");
 };
