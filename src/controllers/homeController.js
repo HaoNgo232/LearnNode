@@ -9,7 +9,7 @@ const {
 const User = require("../models/user");
 
 const getHomepage = async (req, res) => {
-  let results = [];
+  let results = await User.find({});
   return res.render("home.ejs", { listUsers: results });
 };
 const getABC = (req, res) => {
@@ -21,18 +21,11 @@ const hoiTao = (req, res) => {
 };
 
 const postCreateUser = async (req, res) => {
+  // let { email, name, city } = req.body;
   let email = req.body.email;
   let name = req.body.name;
   let city = req.body.city;
-  // let {email, name, city} = req.body
-  console.log(">>> Check email = ", email, "name = ", name, "city = ", city);
-  // let [results, fields] = await connection.query(
-  //   `INSERT INTO Users(email, name, city) VALUES(?, ?, ?)`,
-  //   [email, name, city]
-  // );
-  await User.create({
-    email: email,
-  });
+  await User.create({ email, name, city });
   res.send("Create user successfully");
 };
 
@@ -42,7 +35,9 @@ const getCreatePage = (req, res) => {
 
 const getUpdatePage = async (req, res) => {
   const userId = req.params.id;
-  let user = await getUserById(userId);
+  //let user = await getUserById(userId);
+  let user = await User.findById(userId).exec();
+  console.log(">>> Check user = ", user);
   res.render("edit.ejs", { userEdit: user }); // x <- y
 };
 
@@ -53,7 +48,10 @@ const postUpdateUser = async (req, res) => {
   let name = req.body.name;
   let city = req.body.city;
 
-  await updateUserById(email, name, city, userId);
+  await User.updateOne(
+    { _id: userId },
+    { email: email, name: name, city: city }
+  );
 
   // res.send("Updated user successfully");
   res.redirect("/");
