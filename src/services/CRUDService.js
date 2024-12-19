@@ -1,5 +1,4 @@
 const connection = require("../config/database");
-const { get } = require("../routes/web");
 
 const getAllUsers = async () => {
   let [results, fields] = await connection.query("SELECT * FROM Users");
