@@ -27,9 +27,21 @@ const createArrayCustomerService = async (arrayCustomers) => {
   }
 };
 
-const getAllCustomersService = async () => {
+const getAllCustomersService = async (limit, page, name) => {
   try {
-    let results = await Customer.find({});
+    let results = null;
+    if (limit && page) {
+      let offset = (page - 1) * limit;
+      if (name) {
+        results = await Customer.find({
+          "name": { $regex: '.*' + name + '.*' }
+        }).skip(offset).limit(limit).exec();
+      } else {
+        results = await Customer.find({}).skip(offset).limit(limit).exec();
+      }
+    } else {
+      results = await Customer.find({});
+    }
     return results;
   } catch (error) {
     console.log(">>> check error", error);
