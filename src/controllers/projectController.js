@@ -1,4 +1,4 @@
-const { createProject } = require('../services/productService');
+const { createProject, getProject } = require('../services/productService');
 
 module.exports = {
     postCreateProject: async (req, res) => {
@@ -8,5 +8,13 @@ module.exports = {
             data: result
         });
 
+    },
+
+    getAllProject: async (req, res) => {
+        result = await getProject(req.query);
+        return res.status(200).json({
+            message: "Get all project successfully",
+            data: result
+        });
     }
 }
