@@ -1,25 +1,38 @@
-const mongoose = require("mongoose");
-const mongoose_delete = require("mongoose-delete");
+const mongoose = require('mongoose');
 
-// shape data
+const mongoose_delete = require('mongoose-delete');
+
+//shape data
 const customerSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
+    {
+        name: {
+            type: String,
+            required: true
+        },
+        address: String,
+        phone: String,
+        email: String,
+        image: String,
+        description: String,
     },
-    address: String,
-    phone: String,
-    email: String,
-    image: String,
-    description: String,
-  },
-  { timestamps: true } // auto add created_at, updated_at
+    {
+        timestamps: true, // createdAt, updatedAt
+        // statics: {
+        //     findByHoiDanIT(name) {
+        //         return this.find({ name: new RegExp(name, 'i') });
+        //     },
+
+        //     findByEric(name) {
+        //         return this.find({ name: new RegExp(name, 'i') });
+        //     },
+        // }
+
+    }
 );
 
-customerSchema.plugin(mongoose_delete, { overrideMethods: "all" });
+// Override all methods
+customerSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
-// const Customer = mongoose.model("user", customerSchema);
-const Customer = mongoose.model("customer", customerSchema);
+const Customer = mongoose.model('Customer', customerSchema);
 
 module.exports = Customer;
