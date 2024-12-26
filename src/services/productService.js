@@ -22,12 +22,21 @@ const createProject = async (data) => {
         let result = await project.save();
         return result;
     }
+    if (data.type === "ADD-TASKS") {
+        let project = await Project.findById(data.projectId).exec();
+        for (let i = 0; i < data.tasksArr.length; i++) {
+            project.tasks.push(data.tasksArr[i]);
+        }
+        let result = await project.save();
+        return result;
+    }
     return null;
 };
 
 const getProject = async (queryString) => {
     const page = queryString.page;
     const { filter, limit, population } = aqp(queryString);
+    console.log(">>>check poulation", population)
     delete filter.page;
     let offset = (page - 1) * limit;
     result = await Project.find(filter)
