@@ -49,9 +49,9 @@ module.exports = {
         data: customer,
       });
     }
-  }
+  },
 
-    postCreateArrayCustomer: async (req, res) => {
+  postCreateArrayCustomer: async (req, res) => {
     let customers = await createArrayCustomerService(req.body.customers);
     if (customers) {
       return res.status(200).json({
