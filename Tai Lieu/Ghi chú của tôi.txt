@@ -15,3 +15,5 @@ npm init // Khởi tạo 1 dự án mới với npm
 
 nvm list // liệt kê version nopde.js
 nmv use 14.17.0 // version muốn đổi
+
+mongodb+srv://root:7Kjc9qhcNZrogQ3v@cluster0.tzi7x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
