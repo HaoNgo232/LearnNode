@@ -6,32 +6,52 @@ const {
   putUpdateCustomerService,
   deleteCustomerService,
 } = require("../services/customerService");
+const Joi = require("joi");
 module.exports = {
   postCreateCustomer: async (req, res) => {
     const { name, address, phone, email, description } = req.body;
-    let imageUrl = "";
-    if (!req.files || Object.keys(req.files).length === 0) {
-      // do nothing
-    } else {
-      let result = await uploadSingleFile(req.files.image);
-      imageUrl = result.path;
-    }
-    let customerData = {
-      name,
-      address,
-      phone,
-      email,
-      description,
-      image: imageUrl,
-    };
-    let customer = await createCurtomerService(customerData);
-    return res.status(200).json({
-      errorCode: 0,
-      data: customer,
+    const schema = Joi.object({
+      name: Joi.string()
+        .alphanum()
+        .min(3)
+        .max(30)
+        .required(),
+      address: Joi.string(),
+      phone: Joi.string().pattern(new RegExp('^[0-9]{8,11}$')),
+      email: Joi.string().email(),
+      description: Joi.string(),
     });
-  },
+    const result = schema.validate(req.body, { abortEarly: false });
+    if (result.error) {
+      return res.status(400).json({
+        errorCode: 400,
+        message: result.error.details.map((e) => e.message),
+      });
+    } else {
+      let imageUrl = "";
+      if (!req.files || Object.keys(req.files).length === 0) {
+        // do nothing
+      } else {
+        let result = await uploadSingleFile(req.files.image);
+        imageUrl = result.path;
+      }
+      let customerData = {
+        name,
+        address,
+        phone,
+        email,
+        description,
+        image: imageUrl,
+      };
+      let customer = await createCurtomerService(customerData);
+      return res.status(200).json({
+        errorCode: 0,
+        data: customer,
+      });
+    }
+  }
 
-  postCreateArrayCustomer: async (req, res) => {
+    postCreateArrayCustomer: async (req, res) => {
     let customers = await createArrayCustomerService(req.body.customers);
     if (customers) {
       return res.status(200).json({
